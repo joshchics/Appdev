@@ -41,7 +41,7 @@ export const postItem = async (req, res) => {
     };
 
     if (req.file) {
-      itemData.imageURL = `http://localhost:5000/uploads/${req.file.filename}`;
+      itemData.imageURL = `https://infoassproj.onrender.com/uploads/${req.file.filename}`;
     }
 
     const newItem = new Item(itemData);
