@@ -39,7 +39,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Serve static files from FRONTEND directory
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, '../FRONTEND')));
 app.use('/uploads', express.static(uploadsDir));
 
 // Routes
