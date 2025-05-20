@@ -34,7 +34,7 @@ ENV NODE_ENV=production
 # PORT will be provided by Render at runtime
 
 # Expose the port for the application - will be overridden by Render
-EXPOSE 10000
+EXPOSE 5000
 
 # Command to run the application
 CMD ["node", "BACKEND/server.js"] 
