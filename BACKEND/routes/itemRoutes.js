@@ -10,13 +10,35 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, './uploads/'),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
-const upload = multer({ storage });
+// Add file size limit and file filter for better error handling
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    // Accept only images
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Only image files are allowed!'));
+    }
+    cb(null, true);
+  }
+});
 
 // Middleware to parse form data
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', (req, res, next) => {
+  upload.single('image')(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // Multer-specific errors
+      return res.status(400).json({ error: err.message });
+    } else if (err) {
+      // Other errors
+      return res.status(400).json({ error: err.message });
+    }
+    next();
+  });
+}, async (req, res) => {
   try {
     // Debugging: Log the request body and file
     console.log('Request Body:', req.body);
