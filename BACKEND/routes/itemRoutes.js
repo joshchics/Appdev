@@ -48,4 +48,14 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
+// GET /api/items - fetch all items
+router.get('/', async (req, res) => {
+  try {
+    const items = await Item.find().sort({ createdAt: -1 });
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch items' });
+  }
+});
+
 export default router;
