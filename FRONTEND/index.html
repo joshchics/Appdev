@@ -1518,6 +1518,7 @@
       const formData = new FormData(form);
       const studentId = localStorage.getItem('studentId');
       const studentName = localStorage.getItem('studentName');
+      const category = document.getElementById('category').value;
       
       if (!studentId || !studentName) {
         alert('Please sign in again to submit an item.');
@@ -1527,6 +1528,7 @@
       
       formData.append('studentId', studentId);
       formData.append('studentName', studentName);
+      formData.append('category', category);
       
       try {
         const res = await fetch(API_URL + '/items', {
