@@ -1515,7 +1515,6 @@
       
       if (!await checkServerConnection()) return;
       
-      const formData = new FormData(form);
       const studentId = localStorage.getItem('studentId');
       const studentName = localStorage.getItem('studentName');
       const category = document.getElementById('category').value;
@@ -1526,9 +1525,14 @@
         return;
       }
       
-      formData.append('studentId', studentId);
-      formData.append('studentName', studentName);
-      formData.append('category', category);
+      document.getElementById('studentId').value = studentId;
+      document.getElementById('studentName').value = studentName;
+      document.getElementById('category').value = category;
+      const formData = new FormData(form);
+      
+      formData.set('studentId', studentId);
+      formData.set('studentName', studentName);
+      formData.set('category', category);
       
       try {
         const res = await fetch(API_URL + '/items', {
